@@ -1,0 +1,30 @@
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.exe
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.deps.json
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.runtimeconfig.json
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.runtimeconfig.dev.json
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.dll
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.pdb
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.Form1.resources
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csproj.GenerateResource.cache
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.AssemblyInfoInputs.cache
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.AssemblyInfo.cs
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csproj.CoreCompileInputs.cache
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.dll
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.pdb
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.genruntimeconfig.cache
+H:\2021 C#\C# Internal Project\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csprojAssemblyReference.cache
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.exe
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.deps.json
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.runtimeconfig.json
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.runtimeconfig.dev.json
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.dll
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\bin\Debug\netcoreapp3.1\CSharp_Project_3.pdb
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csprojAssemblyReference.cache
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.Form1.resources
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csproj.GenerateResource.cache
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.AssemblyInfoInputs.cache
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.AssemblyInfo.cs
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.csproj.CoreCompileInputs.cache
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.dll
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.pdb
+C:\Users\Brody\Desktop\CSharp_Project_3\CSharp_Project_3\obj\Debug\netcoreapp3.1\CSharp_Project_3.genruntimeconfig.cache
