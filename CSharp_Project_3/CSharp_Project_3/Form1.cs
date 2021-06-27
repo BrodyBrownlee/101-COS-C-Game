@@ -17,60 +17,17 @@ namespace CSharp_Project_3
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide;
-        int x = 100, y = 325;
         int px = 110, py;
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        int x = 100, y = 325;
         int x2 = 450, y2 = 100;
-
-
-        private void TmrGrav_Tick(object sender, EventArgs e)
-        {
-            /*  if (areaCharacter.IntersectsWith(areaT2)|| areaCharacter.IntersectsWith(areaT1))
-              {
-                  jump = true;
-                  areaCharacter.Y -= 0;
-              }
-              else
-              {
-                  if (areaCharacter.Y + 50 > PnlGame.Height)
-                  {
-                      jump = true;
-                      areaCharacter.Y -= 0;
-
-                  }
-                  else
-                  {
-                      areaCharacter.Y += 1;
-                      jump = false;
-                  }*/
-        }
-
-
-        bool left, right, up, down, jump;
-        int hp = 100;
-        int xp = 0;
-        int dmg = 0;
-        int speedr = 1, speedl = 1, speedu = 1, speedd = 1;
+        bool left, right, up, jump;
+        int lives;
+        int pspeedr = 1, pspeedl = 1, espeedl = 3, espeedr = 3;
         int gravity = -1;
-        //asojnedrgnuojerg
         public Form1()
         {
             InitializeComponent();
-            areaT1 = new Rectangle(x, y, 250, 5);
-            areaB1 = new Rectangle(x, y + 35, 250, 15);
-            areaL1 = new Rectangle(x, y + 5, 5, 40);
-            areaR1 = new Rectangle(x + 245, y + 5, 5, 40);
-            areaTree = new Rectangle(x, y, 250, 50);
-            areaTree2 = new Rectangle(x2, y2, 50, 250);
-            areaT2 = new Rectangle(x2, y2, 45, 5);
-            areaB2 = new Rectangle(x2 + 5, y2 + 235, 45, 15);
-            areaL2 = new Rectangle(x2, y2 + 5, 5, 240);
-            areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
+           
 
 
             //stops the objects from flickering
@@ -89,7 +46,6 @@ namespace CSharp_Project_3
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = true; }
-            if (e.KeyData == Keys.Down) { down = true; }
             if (e.KeyData == Keys.Left) { left = true; }
             if (e.KeyData == Keys.Right) { right = true; }
         }
@@ -97,7 +53,6 @@ namespace CSharp_Project_3
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = false; }
-            if (e.KeyData == Keys.Down) { down = false; }
             if (e.KeyData == Keys.Left) { left = false; }
             if (e.KeyData == Keys.Right) { right = false; }
         }
@@ -107,22 +62,33 @@ namespace CSharp_Project_3
             {
                 if (areaCharacter.IntersectsWith(areaL1))
                 {
-                    speedr = 0;
+                    espeedr = 0;
                 }
                 if (areaCharacter.IntersectsWith(areaL2))
                 {
-                    speedr = 0;
+                    espeedr = 0;
+                }
+                if (x <= -400)
+                {
+                    espeedr = 0;
+                    x = -400;
                 }
             }
             if (left == true)
             {
                 if (areaCharacter.IntersectsWith(areaR1))
                 {
-                    speedl = 0;
+                    espeedl = 0;
                 }
+
                 if (areaCharacter.IntersectsWith(areaR2))
                 {
-                    speedl = 0;
+                    espeedl = 0;
+                }
+                if (x >= 500)
+                {
+                    espeedl = 0;
+                    x = 500;
                 }
             }
 
@@ -134,17 +100,33 @@ namespace CSharp_Project_3
             TSide = new Rectangle(px + 5, py, 50, 5);//Player Rectangle
             BSide = new Rectangle(px + 5, py + 45, 50, 5);//Player Rectangle
             RSide = new Rectangle(px + 45, py, 5, 50);//Player Rectangle
-            label1.Text = gravity + "";
-            if (left) // if left arrow pressed
+            areaT1 = new Rectangle(x, y, 250, 5);
+            areaB1 = new Rectangle(x, y + 35, 250, 15);
+            areaL1 = new Rectangle(x, y + 5, 5, 40);
+            areaR1 = new Rectangle(x + 245, y + 5, 5, 40);
+            areaTree = new Rectangle(x, y, 250, 50);
+            areaTree2 = new Rectangle(x2, y2, 50, 250);
+            areaT2 = new Rectangle(x2, y2, 45, 5);
+            areaB2 = new Rectangle(x2 + 5, y2 + 235, 45, 15);
+            areaL2 = new Rectangle(x2, y2 + 5, 5, 240);
+            areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
+            label1.Text = x + "";
+
+            //movement
+            if (left) // if left arrow pressed 
             {
-                px -= speedl;
+               
+                x += espeedl;
+                x2 += espeedl;
 
             }
             if (right) // if right arrow pressed
             {
-                px += speedr;
+             
+                x -= espeedr;
+                x2 -= espeedr;
             }
-
+            //gravity and the interaction with the tops and bottoms of my platforms
             if (BSide.IntersectsWith(areaT1))
             {
                 gravity = 0;
@@ -169,23 +151,29 @@ namespace CSharp_Project_3
 
             if (TSide.IntersectsWith(areaB1))
             {
-                gravity = -1;
+                gravity = -2;
             }
             if (TSide.IntersectsWith(areaB2))
             {
-                gravity = -1;
+                gravity = -2;
             }
             if (!areaCharacter.IntersectsWith(areaT1) || !(py + 50 > PnlGame.Height))
             {
-                speedl = 2;
-                speedr = 2;
+                espeedl = 3;
+                espeedr = 3;
+                pspeedl = 2;
+                pspeedr = 2;
                 jump = false;
             }
             py = py - gravity;
+            //end of gravity
 
             PnlGame.Invalidate();
         }
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
