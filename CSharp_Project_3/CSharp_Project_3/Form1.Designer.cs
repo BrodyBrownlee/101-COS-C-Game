@@ -32,6 +32,7 @@ namespace CSharp_Project_3
             this.components = new System.ComponentModel.Container();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TmrCollision = new System.Windows.Forms.Timer(this.components);
             this.PnlGame.SuspendLayout();
@@ -45,12 +46,23 @@ namespace CSharp_Project_3
             // 
             // PnlGame
             // 
+            this.PnlGame.Controls.Add(this.label2);
             this.PnlGame.Controls.Add(this.label1);
             this.PnlGame.Location = new System.Drawing.Point(14, 12);
             this.PnlGame.Name = "PnlGame";
             this.PnlGame.Size = new System.Drawing.Size(770, 430);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(638, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "label2";
+            this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1
             // 
@@ -92,6 +104,7 @@ namespace CSharp_Project_3
         private System.Windows.Forms.Timer TmrPlayer;
         private System.Windows.Forms.Timer TmrCollision;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

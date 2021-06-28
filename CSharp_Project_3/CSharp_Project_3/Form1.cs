@@ -22,7 +22,7 @@ namespace CSharp_Project_3
         int x2 = 450, y2 = 100;
         bool left, right, up, jump;
         int lives;
-        int pspeedr = 1, pspeedl = 1, espeedl = 3, espeedr = 3;
+        int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2;
         int gravity = -1;
         public Form1()
         {
@@ -60,35 +60,69 @@ namespace CSharp_Project_3
         {
             if (right == true)
             {
+                if (px >= 720)
+                {
+                    pspeedr = 0;
+                    px = 720;
+                }
+                else
+                {
+                    pspeedl = 1;
+                }
                 if (areaCharacter.IntersectsWith(areaL1))
                 {
                     espeedr = 0;
+                    pspeedr = 0;
                 }
                 if (areaCharacter.IntersectsWith(areaL2))
                 {
                     espeedr = 0;
+                    pspeedr = 0;
                 }
                 if (x <= -400)
                 {
                     espeedr = 0;
                     x = -400;
+                    pspeedr = 2;
+                }
+                else
+                {
+                    pspeedr = 1;
+                    espeedr = 2;
                 }
             }
             if (left == true)
             {
+                if (px <= 0)
+                {
+                    pspeedl = 0;
+                    px = 0;
+                }
+                else
+                {
+                    pspeedl = 1;
+                }
                 if (areaCharacter.IntersectsWith(areaR1))
                 {
                     espeedl = 0;
+                    pspeedl = 0;
                 }
 
                 if (areaCharacter.IntersectsWith(areaR2))
                 {
                     espeedl = 0;
+                    pspeedl = 0;
                 }
                 if (x >= 500)
                 {
                     espeedl = 0;
                     x = 500;
+                    pspeedl = 2;
+                }
+                else
+                {
+                    pspeedl = 1;
+                    espeedl = 2;
                 }
             }
 
@@ -110,19 +144,18 @@ namespace CSharp_Project_3
             areaB2 = new Rectangle(x2 + 5, y2 + 235, 45, 15);
             areaL2 = new Rectangle(x2, y2 + 5, 5, 240);
             areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
-            label1.Text = x + "";
 
             //movement
             if (left) // if left arrow pressed 
             {
-               
+                px -= pspeedl;
                 x += espeedl;
                 x2 += espeedl;
 
             }
             if (right) // if right arrow pressed
             {
-             
+                px += pspeedr;
                 x -= espeedr;
                 x2 -= espeedr;
             }
@@ -159,10 +192,10 @@ namespace CSharp_Project_3
             }
             if (!areaCharacter.IntersectsWith(areaT1) || !(py + 50 > PnlGame.Height))
             {
-                espeedl = 3;
-                espeedr = 3;
-                pspeedl = 2;
-                pspeedr = 2;
+                espeedl = 2;
+                espeedr = 2;
+                pspeedl = 1;
+                pspeedr = 1;
                 jump = false;
             }
             py = py - gravity;
