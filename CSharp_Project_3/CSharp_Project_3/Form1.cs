@@ -17,7 +17,7 @@ namespace CSharp_Project_3
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide;
-        int px = 110, py;
+        int px = 270, py;
         int x = 100, y = 325;
         int x2 = 450, y2 = 100;
         bool left, right, up, jump;
@@ -65,9 +65,15 @@ namespace CSharp_Project_3
                     pspeedr = 0;
                     px = 720;
                 }
+                if (px <= 270)
+                {
+                    espeedr = 0;
+                        pspeedr = 2;
+                }
                 else
                 {
-                    pspeedl = 1;
+                    espeedr = 2;
+                    pspeedr = 0;
                 }
                 if (areaCharacter.IntersectsWith(areaL1))
                 {
@@ -85,11 +91,6 @@ namespace CSharp_Project_3
                     x = -400;
                     pspeedr = 2;
                 }
-                else
-                {
-                    pspeedr = 1;
-                    espeedr = 2;
-                }
             }
             if (left == true)
             {
@@ -101,6 +102,17 @@ namespace CSharp_Project_3
                 else
                 {
                     pspeedl = 1;
+                }
+
+                if (px > 450)
+                {
+                    espeedl = 0;
+                    pspeedl = 2;
+                }
+                else
+                {
+                    espeedl = 2;
+                    pspeedl = 0;
                 }
                 if (areaCharacter.IntersectsWith(areaR1))
                 {
@@ -119,11 +131,7 @@ namespace CSharp_Project_3
                     x = 500;
                     pspeedl = 2;
                 }
-                else
-                {
-                    pspeedl = 1;
-                    espeedl = 2;
-                }
+              
             }
 
         }
@@ -144,6 +152,7 @@ namespace CSharp_Project_3
             areaB2 = new Rectangle(x2 + 5, y2 + 235, 45, 15);
             areaL2 = new Rectangle(x2, y2 + 5, 5, 240);
             areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
+            label1.Text = px + "";
 
             //movement
             if (left) // if left arrow pressed 
