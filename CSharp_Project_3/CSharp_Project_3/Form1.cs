@@ -16,10 +16,11 @@ namespace CSharp_Project_3
         Image character = Image.FromFile(Application.StartupPath + @"\character2.jpg");
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
-        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide;
+        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3;
         int px = 270, py;
         int x = 100, y = 325;
         int x2 = 450, y2 = 100;
+        int x3 = -350;
         bool left, right, up, jump;
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2;
@@ -65,7 +66,7 @@ namespace CSharp_Project_3
                     pspeedr = 0;
                     px = 720;
                 }
-                if (px <= 270)
+                if (px <= 350)
                 {
                     espeedr = 0;
                         pspeedr = 2;
@@ -104,7 +105,7 @@ namespace CSharp_Project_3
                     pspeedl = 1;
                 }
 
-                if (px > 450)
+                if (px > 350)
                 {
                     espeedl = 0;
                     pspeedl = 2;
@@ -152,6 +153,8 @@ namespace CSharp_Project_3
             areaB2 = new Rectangle(x2 + 5, y2 + 235, 45, 15);
             areaL2 = new Rectangle(x2, y2 + 5, 5, 240);
             areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
+            areaT3 = new Rectangle(x3, y, 250, 15);
+
             label1.Text = px + "";
 
             //movement
@@ -160,6 +163,7 @@ namespace CSharp_Project_3
                 px -= pspeedl;
                 x += espeedl;
                 x2 += espeedl;
+                x3 += espeedl;
 
             }
             if (right) // if right arrow pressed
@@ -167,12 +171,19 @@ namespace CSharp_Project_3
                 px += pspeedr;
                 x -= espeedr;
                 x2 -= espeedr;
+                x3 -= espeedr;
             }
             //gravity and the interaction with the tops and bottoms of my platforms
             if (BSide.IntersectsWith(areaT1))
             {
                 gravity = 0;
                 py = areaT1.Top - 49;
+                jump = true;
+            }
+            if (BSide.IntersectsWith(areaT3))
+            {
+                gravity = 0;
+                py = areaT3.Top - 49;
                 jump = true;
             }
             if (py + 50 > PnlGame.Height)
@@ -199,7 +210,8 @@ namespace CSharp_Project_3
             {
                 gravity = -2;
             }
-            if (!areaCharacter.IntersectsWith(areaT1) || !(py + 50 > PnlGame.Height))
+         
+            if (!areaCharacter.IntersectsWith(areaT1) || !(py + 50 > PnlGame.Height) || (!areaCharacter.IntersectsWith(areaT3)))
             {
                 espeedl = 2;
                 espeedr = 2;
@@ -225,10 +237,10 @@ namespace CSharp_Project_3
 
 
 
-            e.Graphics.FillRectangle(Brushes.Purple, areaT1);
-            e.Graphics.FillRectangle(Brushes.Pink, areaB1);
-            /* e.Graphics.FillRectangle(Brushes.Pink, areaL2);
-             e.Graphics.FillRectangle(Brushes.Purple, areaR2);*/
+            e.Graphics.FillRectangle(Brushes.Purple, areaT3);
+            e.Graphics.FillRectangle(Brushes.Pink, areaB2);
+            e.Graphics.FillRectangle(Brushes.Pink, areaL2);
+            e.Graphics.FillRectangle(Brushes.Purple, areaR2);
         }
 
 

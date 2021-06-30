@@ -41,7 +41,7 @@ namespace CSharp_Project_3
             // TmrPlayer
             // 
             this.TmrPlayer.Enabled = true;
-            this.TmrPlayer.Interval = 2;
+            this.TmrPlayer.Interval = 4;
             this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
             // PnlGame
