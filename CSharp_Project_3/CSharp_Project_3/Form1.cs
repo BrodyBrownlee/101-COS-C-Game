@@ -16,12 +16,16 @@ namespace CSharp_Project_3
         Image character = Image.FromFile(Application.StartupPath + @"\character2.jpg");
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
-        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3;
+        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet;
+        Rectangle[] bulletarrayl = new Rectangle[16];
+        Rectangle[] bulletarrayr = new Rectangle[5];
+        int bulletloopl;
+        int bulletloopr;
         int px = 270, py;
         int x = 100, y = 325;
         int x2 = 450, y2 = 100;
         int x3 = -350;
-        bool left, right, up, jump;
+        bool left, right, up, jump, shoot;
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2;
         int gravity = -1;
@@ -39,7 +43,8 @@ namespace CSharp_Project_3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            bulletloopl = 1;
+            bulletloopr = 1;
         }
 
 
@@ -49,16 +54,39 @@ namespace CSharp_Project_3
             if (e.KeyData == Keys.Up) { up = true; }
             if (e.KeyData == Keys.Left) { left = true; }
             if (e.KeyData == Keys.Right) { right = true; }
+            if (e.KeyData == Keys.Space) { shoot = false; }
         }
-
+        
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = false; }
             if (e.KeyData == Keys.Left) { left = false; }
             if (e.KeyData == Keys.Right) { right = false; }
+            if (e.KeyData == Keys.Space) { shoot = true; }
         }
         private void TmrCollision_Tick(object sender, EventArgs e) //collision using rectangles as borders for my object, this simplified my code greatly and allowed for smooth collisions
         {
+           
+          
+            if (shoot == true)
+            {
+                
+                    bulletarrayl[bulletloopl] = new Rectangle(px, py, 5, 5);
+                    if (bulletloopl > 14)
+                    {
+                        bulletloopl = 1;
+                    }
+                    else
+                    {
+                        bulletloopl += 1;
+                    }
+                shoot = false;
+              
+            }
+            for (int i = 0; i<= 15; i++)
+            {
+                bulletarrayl[i].X -= 1;
+            }
             if (right == true)
             {
                 if (px >= 720)
@@ -236,11 +264,15 @@ namespace CSharp_Project_3
             g.DrawImage(tree2, areaTree2);
 
 
-
+            for (int i=0; i <= 15; i++)
+            {
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[i]);
+            }
             e.Graphics.FillRectangle(Brushes.Purple, areaT3);
             e.Graphics.FillRectangle(Brushes.Pink, areaB2);
             e.Graphics.FillRectangle(Brushes.Pink, areaL2);
             e.Graphics.FillRectangle(Brushes.Purple, areaR2);
+           
         }
 
 
