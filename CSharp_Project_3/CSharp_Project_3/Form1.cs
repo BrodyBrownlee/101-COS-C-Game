@@ -18,7 +18,7 @@ namespace CSharp_Project_3
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet;
         Rectangle[] bulletarrayl = new Rectangle[16];
-        Rectangle[] bulletarrayr = new Rectangle[5];
+        Rectangle[] bulletarrayr = new Rectangle[16];
         int bulletloopl;
         int bulletloopr;
         int px = 270, py;
@@ -66,27 +66,15 @@ namespace CSharp_Project_3
         }
         private void TmrCollision_Tick(object sender, EventArgs e) //collision using rectangles as borders for my object, this simplified my code greatly and allowed for smooth collisions
         {
-           
-          
-            if (shoot == true)
+            for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
-                
-                    bulletarrayl[bulletloopl] = new Rectangle(px, py, 5, 5);
-                    if (bulletloopl > 14)
-                    {
-                        bulletloopl = 1;
-                    }
-                    else
-                    {
-                        bulletloopl += 1;
-                    }
-                shoot = false;
-              
+                bulletarrayl[bulletloopl].X -= 8 - pspeedl;
             }
-            for (int i = 0; i<= 15; i++)
+            for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
             {
-                bulletarrayl[i].X -= 1;
+                bulletarrayr[bulletloopr].X += 8 - pspeedr;
             }
+
             if (right == true)
             {
                 if (px >= 720)
@@ -120,6 +108,22 @@ namespace CSharp_Project_3
                     x = -400;
                     pspeedr = 2;
                 }
+
+                if (shoot == true)
+                {
+
+                    bulletarrayr[bulletloopr] = new Rectangle(px + 45, py + 20, 5, 5);
+                    if (bulletloopr > 14)
+                    {
+                        bulletloopr = 1;
+                    }
+                    else
+                    {
+                        bulletloopr += 1;
+                    }
+                    shoot = false;
+                }
+               
             }
             if (left == true)
             {
@@ -160,7 +164,22 @@ namespace CSharp_Project_3
                     x = 500;
                     pspeedl = 2;
                 }
-              
+                if (shoot == true)
+                {
+                     
+                    bulletarrayl[bulletloopl] = new Rectangle(px, py + 20, 5, 5);
+                    if (bulletloopl > 14)
+                    {
+                        bulletloopl = 1;
+                    }
+                    else
+                    {
+                        bulletloopl += 1;
+                    }
+                    shoot = false;
+                
+                }
+       
             }
 
         }
@@ -267,6 +286,7 @@ namespace CSharp_Project_3
             for (int i=0; i <= 15; i++)
             {
                 e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[i]);
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[i]);
             }
             e.Graphics.FillRectangle(Brushes.Purple, areaT3);
             e.Graphics.FillRectangle(Brushes.Pink, areaB2);
