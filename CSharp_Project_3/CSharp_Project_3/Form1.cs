@@ -29,6 +29,7 @@ namespace CSharp_Project_3
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2;
         int gravity = -1;
+        string lastkeypressed;
         public Form1()
         {
             InitializeComponent();
@@ -54,16 +55,57 @@ namespace CSharp_Project_3
             if (e.KeyData == Keys.Up) { up = true; }
             if (e.KeyData == Keys.Left) { left = true; }
             if (e.KeyData == Keys.Right) { right = true; }
-            if (e.KeyData == Keys.Space) { shoot = false; }
+            if (e.KeyData == Keys.Space) { shoot = true; }
         }
         
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = false; }
-            if (e.KeyData == Keys.Left) { left = false; }
-            if (e.KeyData == Keys.Right) { right = false; }
-            if (e.KeyData == Keys.Space) { shoot = true; }
+            if (e.KeyData == Keys.Left) { left = false; lastkeypressed = "left"; }
+            if (e.KeyData == Keys.Right) { right = false; lastkeypressed = "right"; }
+            if (e.KeyData == Keys.Space) { shoot = false; }
         }
+        private void tmrBulletdelay_Tick(object sender, EventArgs e)
+        {
+          
+            if (right || lastkeypressed == "right")
+            {
+
+                if (shoot == true)
+                {
+
+                    bulletarrayr[bulletloopr] = new Rectangle(px + 45, py + 20, 5, 5);
+                    if (bulletloopr > 14)
+                    {
+                        bulletloopr = 1;
+                    }
+                    else
+                    {
+                        bulletloopr += 1;
+                    }
+                    shoot = false;
+                }
+            }
+            if (left || lastkeypressed == "left")
+            {
+                if (shoot == true)
+                {
+
+                    bulletarrayl[bulletloopl] = new Rectangle(px, py + 20, 5, 5);
+                    if (bulletloopl > 14)
+                    {
+                        bulletloopl = 1;
+                    }
+                    else
+                    {
+                        bulletloopl += 1;
+                    }
+                    shoot = false;
+
+                }
+            }
+        }
+
         private void TmrCollision_Tick(object sender, EventArgs e) //collision using rectangles as borders for my object, this simplified my code greatly and allowed for smooth collisions
         {
             for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
@@ -74,7 +116,6 @@ namespace CSharp_Project_3
             {
                 bulletarrayr[bulletloopr].X += 8 - pspeedr;
             }
-
             if (right == true)
             {
                 if (px >= 720)
@@ -109,20 +150,6 @@ namespace CSharp_Project_3
                     pspeedr = 2;
                 }
 
-                if (shoot == true)
-                {
-
-                    bulletarrayr[bulletloopr] = new Rectangle(px + 45, py + 20, 5, 5);
-                    if (bulletloopr > 14)
-                    {
-                        bulletloopr = 1;
-                    }
-                    else
-                    {
-                        bulletloopr += 1;
-                    }
-                    shoot = false;
-                }
                
             }
             if (left == true)
@@ -164,21 +191,7 @@ namespace CSharp_Project_3
                     x = 500;
                     pspeedl = 2;
                 }
-                if (shoot == true)
-                {
-                     
-                    bulletarrayl[bulletloopl] = new Rectangle(px, py + 20, 5, 5);
-                    if (bulletloopl > 14)
-                    {
-                        bulletloopl = 1;
-                    }
-                    else
-                    {
-                        bulletloopl += 1;
-                    }
-                    shoot = false;
-                
-                }
+              
        
             }
 

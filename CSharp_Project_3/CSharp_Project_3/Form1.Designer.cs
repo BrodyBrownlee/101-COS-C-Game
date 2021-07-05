@@ -35,6 +35,7 @@ namespace CSharp_Project_3
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TmrCollision = new System.Windows.Forms.Timer(this.components);
+            this.tmrBulletdelay = new System.Windows.Forms.Timer(this.components);
             this.PnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +81,12 @@ namespace CSharp_Project_3
             this.TmrCollision.Interval = 1;
             this.TmrCollision.Tick += new System.EventHandler(this.TmrCollision_Tick);
             // 
+            // tmrBulletdelay
+            // 
+            this.tmrBulletdelay.Enabled = true;
+            this.tmrBulletdelay.Interval = 400;
+            this.tmrBulletdelay.Tick += new System.EventHandler(this.tmrBulletdelay_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -105,6 +112,7 @@ namespace CSharp_Project_3
         private System.Windows.Forms.Timer TmrCollision;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer tmrBulletdelay;
     }
 }
 
