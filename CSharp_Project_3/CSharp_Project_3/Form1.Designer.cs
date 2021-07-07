@@ -60,9 +60,8 @@ namespace CSharp_Project_3
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(638, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 15);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 0;
-            this.label2.Text = "label2";
             this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1

@@ -53,27 +53,25 @@ namespace CSharp_Project_3
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = true; }
-            if (e.KeyData == Keys.Left) { left = true; }
-            if (e.KeyData == Keys.Right) { right = true; }
+            if (e.KeyData == Keys.Left) { left = true; lastkeypressed = "left"; }
+            if (e.KeyData == Keys.Right) { right = true; lastkeypressed = "right"; }
             if (e.KeyData == Keys.Space) { shoot = true; }
         }
         
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = false; }
-            if (e.KeyData == Keys.Left) { left = false; lastkeypressed = "left"; }
-            if (e.KeyData == Keys.Right) { right = false; lastkeypressed = "right"; }
+            if (e.KeyData == Keys.Left) { left = false; }
+            if (e.KeyData == Keys.Right) { right = false;}
             if (e.KeyData == Keys.Space) { shoot = false; }
         }
         private void tmrBulletdelay_Tick(object sender, EventArgs e)
         {
-          
-            if (right || lastkeypressed == "right")
-            {
-
+           
+                if (right || lastkeypressed == "right")
+                {
                 if (shoot == true)
                 {
-
                     bulletarrayr[bulletloopr] = new Rectangle(px + 45, py + 20, 5, 5);
                     if (bulletloopr > 14)
                     {
@@ -83,14 +81,15 @@ namespace CSharp_Project_3
                     {
                         bulletloopr += 1;
                     }
-                    shoot = false;
                 }
-            }
-            if (left || lastkeypressed == "left")
-            {
-                if (shoot == true)
-                {
+                }
+          
 
+            
+            if (shoot == true)
+            {
+                if (left || lastkeypressed == "left")
+                {
                     bulletarrayl[bulletloopl] = new Rectangle(px, py + 20, 5, 5);
                     if (bulletloopl > 14)
                     {
@@ -100,10 +99,9 @@ namespace CSharp_Project_3
                     {
                         bulletloopl += 1;
                     }
-                    shoot = false;
-
                 }
             }
+          
         }
 
         private void TmrCollision_Tick(object sender, EventArgs e) //collision using rectangles as borders for my object, this simplified my code greatly and allowed for smooth collisions
@@ -111,10 +109,29 @@ namespace CSharp_Project_3
             for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
                 bulletarrayl[bulletloopl].X -= 8 - pspeedl;
+                if (bulletarrayl[bulletloopl].IntersectsWith(areaTree2))
+                {
+                    bulletarrayl[bulletloopl] = Rectangle.Empty;
+                }
+                if (bulletarrayl[bulletloopl].IntersectsWith(areaTree))
+                {
+                    bulletarrayl[bulletloopl] = Rectangle.Empty;
+                }
+
             }
+
             for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
             {
                 bulletarrayr[bulletloopr].X += 8 - pspeedr;
+
+                if (bulletarrayr[bulletloopr].IntersectsWith(areaTree2))
+                {
+                    bulletarrayr[bulletloopr] = Rectangle.Empty;
+                }
+                if (bulletarrayr[bulletloopr].IntersectsWith(areaTree))
+                {
+                    bulletarrayr[bulletloopr] = Rectangle.Empty;
+                }
             }
             if (right == true)
             {
@@ -191,8 +208,8 @@ namespace CSharp_Project_3
                     x = 500;
                     pspeedl = 2;
                 }
-              
-       
+
+
             }
 
         }
@@ -215,7 +232,8 @@ namespace CSharp_Project_3
             areaR2 = new Rectangle(x2 + 45, y2 + 5, 5, 240);
             areaT3 = new Rectangle(x3, y, 250, 15);
 
-            label1.Text = px + "";
+            label1.Text = bulletloopl + "";
+            label2.Text = bulletloopr + "";
 
             //movement
             if (left) // if left arrow pressed 
@@ -296,12 +314,18 @@ namespace CSharp_Project_3
             g.DrawImage(tree2, areaTree2);
 
 
-            for (int i=0; i <= 15; i++)
+            for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[i]);
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[i]);
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
+
             }
-            e.Graphics.FillRectangle(Brushes.Purple, areaT3);
+
+            for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
+            {
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
+            }
+
+                e.Graphics.FillRectangle(Brushes.Purple, areaT3);
             e.Graphics.FillRectangle(Brushes.Pink, areaB2);
             e.Graphics.FillRectangle(Brushes.Pink, areaL2);
             e.Graphics.FillRectangle(Brushes.Purple, areaR2);
