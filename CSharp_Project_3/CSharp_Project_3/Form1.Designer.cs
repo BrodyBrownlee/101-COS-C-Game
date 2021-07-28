@@ -35,13 +35,14 @@ namespace CSharp_Project_3
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TmrCollision = new System.Windows.Forms.Timer(this.components);
+            this.tmrBulletdelay = new System.Windows.Forms.Timer(this.components);
             this.PnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
             // TmrPlayer
             // 
             this.TmrPlayer.Enabled = true;
-            this.TmrPlayer.Interval = 2;
+            this.TmrPlayer.Interval = 4;
             this.TmrPlayer.Tick += new System.EventHandler(this.TmrPlayer_Tick);
             // 
             // PnlGame
@@ -59,9 +60,8 @@ namespace CSharp_Project_3
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(638, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 15);
+            this.label2.Size = new System.Drawing.Size(0, 15);
             this.label2.TabIndex = 0;
-            this.label2.Text = "label2";
             this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1
@@ -79,6 +79,12 @@ namespace CSharp_Project_3
             this.TmrCollision.Enabled = true;
             this.TmrCollision.Interval = 1;
             this.TmrCollision.Tick += new System.EventHandler(this.TmrCollision_Tick);
+            // 
+            // tmrBulletdelay
+            // 
+            this.tmrBulletdelay.Enabled = true;
+            this.tmrBulletdelay.Interval = 400;
+            this.tmrBulletdelay.Tick += new System.EventHandler(this.tmrBulletdelay_Tick);
             // 
             // Form1
             // 
@@ -105,6 +111,7 @@ namespace CSharp_Project_3
         private System.Windows.Forms.Timer TmrCollision;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer tmrBulletdelay;
     }
 }
 
