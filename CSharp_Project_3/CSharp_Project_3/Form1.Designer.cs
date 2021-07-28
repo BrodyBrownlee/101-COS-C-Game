@@ -49,9 +49,9 @@ namespace CSharp_Project_3
             // 
             this.PnlGame.Controls.Add(this.label2);
             this.PnlGame.Controls.Add(this.label1);
-            this.PnlGame.Location = new System.Drawing.Point(14, 12);
+            this.PnlGame.Location = new System.Drawing.Point(-2, -3);
             this.PnlGame.Name = "PnlGame";
-            this.PnlGame.Size = new System.Drawing.Size(770, 430);
+            this.PnlGame.Size = new System.Drawing.Size(804, 454);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
             // 
@@ -83,7 +83,7 @@ namespace CSharp_Project_3
             // tmrBulletdelay
             // 
             this.tmrBulletdelay.Enabled = true;
-            this.tmrBulletdelay.Interval = 400;
+            this.tmrBulletdelay.Interval = 600;
             this.tmrBulletdelay.Tick += new System.EventHandler(this.tmrBulletdelay_Tick);
             // 
             // Form1
