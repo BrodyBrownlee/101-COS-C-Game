@@ -214,18 +214,23 @@ namespace CSharp_Project_3
 
 
             }
-            if (py! >= 380)
-            {
-
-            }
-            else
+            if (py <= 22)
             {
                 y += 14;
                 y2 += 14;
                 floory += 14;
-
             }
 
+            if (y >= 500)
+            {
+                y += 0;
+                y2 += 0;
+                floory += 0;
+            }
+            else
+            {
+
+            }
           
      
             if (py >= 381 && y == 320)
@@ -235,9 +240,15 @@ namespace CSharp_Project_3
                 y2 += 0;
                 floory += 0;
             }
-            if (x < -1000)// all the camera movement for the first building
+            if (py >= 367 && y == 306)
             {
-                if (y > 558)
+                y = 320;
+                y2 = 120;
+                floory = 489;
+            }
+
+
+            if (y >= 558)
                 {
                     y = 558;
                 }
@@ -247,7 +258,7 @@ namespace CSharp_Project_3
                     y2 -= 14;
                     floory -= 14;
                 }
-                if (py <= 100)
+                if (py >= 382)
                 {
 
                     y -= 14;
@@ -260,7 +271,7 @@ namespace CSharp_Project_3
                 {
 
                 }
-            }
+            
             if (y == 334 && py == 395)// fixes a bug where the floor would move if you hit your head on the roof, which often lead to clipping thorugh the floor.
             {
                 y -= 14;
@@ -379,6 +390,7 @@ namespace CSharp_Project_3
                         gravity = 5;
                     }
                 }
+                gravity += 1;
             }
 /*
             if (py + 50 > PnlGame.Height)
