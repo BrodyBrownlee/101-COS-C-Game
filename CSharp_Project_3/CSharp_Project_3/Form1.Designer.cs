@@ -32,10 +32,16 @@ namespace CSharp_Project_3
             this.components = new System.ComponentModel.Container();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.btnCriminal = new System.Windows.Forms.Button();
+            this.btnBurglar = new System.Windows.Forms.Button();
+            this.btnTheif = new System.Windows.Forms.Button();
+            this.btnDifficulty = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TmrCollision = new System.Windows.Forms.Timer(this.components);
             this.tmrBulletdelay = new System.Windows.Forms.Timer(this.components);
+            this.tmrCountdown = new System.Windows.Forms.Timer(this.components);
             this.PnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +53,11 @@ namespace CSharp_Project_3
             // 
             // PnlGame
             // 
+            this.PnlGame.Controls.Add(this.btnCriminal);
+            this.PnlGame.Controls.Add(this.btnBurglar);
+            this.PnlGame.Controls.Add(this.btnTheif);
+            this.PnlGame.Controls.Add(this.btnDifficulty);
+            this.PnlGame.Controls.Add(this.btnStart);
             this.PnlGame.Controls.Add(this.label2);
             this.PnlGame.Controls.Add(this.label1);
             this.PnlGame.Location = new System.Drawing.Point(-2, -3);
@@ -54,6 +65,56 @@ namespace CSharp_Project_3
             this.PnlGame.Size = new System.Drawing.Size(804, 454);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
+            // 
+            // btnCriminal
+            // 
+            this.btnCriminal.Location = new System.Drawing.Point(489, 308);
+            this.btnCriminal.Name = "btnCriminal";
+            this.btnCriminal.Size = new System.Drawing.Size(140, 50);
+            this.btnCriminal.TabIndex = 5;
+            this.btnCriminal.Text = "Criminal";
+            this.btnCriminal.UseVisualStyleBackColor = true;
+            this.btnCriminal.Click += new System.EventHandler(this.btnCriminal_Click);
+            // 
+            // btnBurglar
+            // 
+            this.btnBurglar.Location = new System.Drawing.Point(330, 308);
+            this.btnBurglar.Name = "btnBurglar";
+            this.btnBurglar.Size = new System.Drawing.Size(140, 50);
+            this.btnBurglar.TabIndex = 4;
+            this.btnBurglar.Text = "Burglar";
+            this.btnBurglar.UseVisualStyleBackColor = true;
+            this.btnBurglar.Click += new System.EventHandler(this.btnBurglar_Click);
+            // 
+            // btnTheif
+            // 
+            this.btnTheif.Location = new System.Drawing.Point(171, 308);
+            this.btnTheif.Name = "btnTheif";
+            this.btnTheif.Size = new System.Drawing.Size(140, 50);
+            this.btnTheif.TabIndex = 3;
+            this.btnTheif.Text = "Theif";
+            this.btnTheif.UseVisualStyleBackColor = true;
+            this.btnTheif.Click += new System.EventHandler(this.btnTheif_Click);
+            // 
+            // btnDifficulty
+            // 
+            this.btnDifficulty.Location = new System.Drawing.Point(330, 391);
+            this.btnDifficulty.Name = "btnDifficulty";
+            this.btnDifficulty.Size = new System.Drawing.Size(140, 50);
+            this.btnDifficulty.TabIndex = 2;
+            this.btnDifficulty.Text = "Select Difficulty!";
+            this.btnDifficulty.UseVisualStyleBackColor = true;
+            this.btnDifficulty.Click += new System.EventHandler(this.btnDifficulty_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(330, 308);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(140, 50);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "Start Game!";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // label2
             // 
@@ -69,9 +130,8 @@ namespace CSharp_Project_3
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(682, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.Size = new System.Drawing.Size(0, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // TmrCollision
@@ -85,6 +145,11 @@ namespace CSharp_Project_3
             this.tmrBulletdelay.Enabled = true;
             this.tmrBulletdelay.Interval = 600;
             this.tmrBulletdelay.Tick += new System.EventHandler(this.tmrBulletdelay_Tick);
+            // 
+            // tmrCountdown
+            // 
+            this.tmrCountdown.Interval = 1000;
+            this.tmrCountdown.Tick += new System.EventHandler(this.tmrCountdown_Tick);
             // 
             // Form1
             // 
@@ -112,6 +177,12 @@ namespace CSharp_Project_3
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer tmrBulletdelay;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnDifficulty;
+        private System.Windows.Forms.Button btnCriminal;
+        private System.Windows.Forms.Button btnBurglar;
+        private System.Windows.Forms.Button btnTheif;
+        private System.Windows.Forms.Timer tmrCountdown;
     }
 }
 
