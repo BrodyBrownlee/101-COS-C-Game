@@ -37,7 +37,7 @@ namespace CSharp_Project_3
         int x4 = 500;
         int floory = 489;
         int enemyhp = 3;
-        bool left, right, up, jump, shoot, start;
+        bool left, right, up, jump, shoot, start, game_end;
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2, espeedu = 0, espeedd = 0;
         int gravity = -1;
@@ -61,6 +61,7 @@ namespace CSharp_Project_3
             bulletloopl = 1;
             bulletloopr = 1;
             start = false;
+            game_end = false;
 
             tmrCountdown.Enabled = false;
             tmrBulletdelay.Enabled = false;
@@ -177,7 +178,7 @@ namespace CSharp_Project_3
         }
         private void gameOver()
         {
-
+            game_end = true;
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -201,6 +202,10 @@ namespace CSharp_Project_3
             if (time <= 0)
             {
                 gameOver();
+                TmrPlayer.Enabled = false;
+                tmrBulletdelay.Enabled = false;
+                TmrCollision.Enabled = false;
+
             }
         }
         private void tmrBulletdelay_Tick(object sender, EventArgs e)
@@ -622,8 +627,12 @@ namespace CSharp_Project_3
                 {
                     e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
                 }
-            
-        }
+
+            }
+            if (game_end == true)
+            {
+              
+            }
 
         }
 
