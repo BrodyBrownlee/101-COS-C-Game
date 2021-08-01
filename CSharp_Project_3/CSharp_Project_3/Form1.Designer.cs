@@ -92,7 +92,7 @@ namespace CSharp_Project_3
             this.btnTheif.Name = "btnTheif";
             this.btnTheif.Size = new System.Drawing.Size(140, 50);
             this.btnTheif.TabIndex = 3;
-            this.btnTheif.Text = "Theif";
+            this.btnTheif.Text = "Thief";
             this.btnTheif.UseVisualStyleBackColor = true;
             this.btnTheif.Click += new System.EventHandler(this.btnTheif_Click);
             // 

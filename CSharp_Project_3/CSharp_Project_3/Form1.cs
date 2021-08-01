@@ -16,7 +16,7 @@ namespace CSharp_Project_3
         Image character = Image.FromFile(Application.StartupPath + @"\character2.jpg");
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
-        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2,Ladder3,Ladder4,Ladder5;
+        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2,Ladder3,Ladder4,Ladder5, gameoverRectangle;
         Rectangle[] bulletarrayl = new Rectangle[16];
         Rectangle[] bulletarrayr = new Rectangle[16];
         Rectangle[] UpS = new Rectangle[20];
@@ -75,8 +75,8 @@ namespace CSharp_Project_3
             btnTheif.Enabled = false;
             difficulty = "theif";
             time = 60;
-                
 
+            gameoverRectangle = new Rectangle(0, 0, 1000, 1000);
 
         }
 
@@ -175,10 +175,25 @@ namespace CSharp_Project_3
             {
                 time = 30;
             }
+          
         }
         private void gameOver()
         {
             game_end = true;
+        }
+        private void tmrCountdown_Tick(object sender, EventArgs e)
+        {
+            label1.Text = time + "";
+            time -= 1;
+            if (time == 0)
+            {
+               
+                gameOver();
+                TmrPlayer.Enabled = false;
+                tmrBulletdelay.Enabled = false;
+                TmrCollision.Enabled = false;
+
+            }
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -195,19 +210,7 @@ namespace CSharp_Project_3
             if (e.KeyData == Keys.Right) { right = false; }
             if (e.KeyData == Keys.Space) { shoot = false; }
         }
-        private void tmrCountdown_Tick(object sender, EventArgs e)
-        {
-            label1.Text = time + "";
-            time -= 1;
-            if (time <= 0)
-            {
-                gameOver();
-                TmrPlayer.Enabled = false;
-                tmrBulletdelay.Enabled = false;
-                TmrCollision.Enabled = false;
-
-            }
-        }
+ 
         private void tmrBulletdelay_Tick(object sender, EventArgs e)
         {
 
@@ -456,6 +459,7 @@ namespace CSharp_Project_3
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
             //declaring player and enemy rectangles
+            gameoverRectangle = new Rectangle(0, 0, 1000, 1000);
             enemy = new Rectangle(x4, floory - 110, 50, 50);
             areaCharacter = new Rectangle(px, py, 50, 50);
             LSide = new Rectangle(px, py, 5, 50);//Player Rectangle
@@ -587,9 +591,16 @@ namespace CSharp_Project_3
         }
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
+            g = e.Graphics;
+            if (game_end == true)
+            {
+                e.Graphics.FillRectangle(Brushes.White, gameoverRectangle);
+            }
+        
+
             if (start == true)// when the game starts all of the graphics are loaded
             {
-                g = e.Graphics;
+              
 
                 e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
                 e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
@@ -627,12 +638,9 @@ namespace CSharp_Project_3
                 {
                     e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
                 }
-
+                start = false;
             }
-            if (game_end == true)
-            {
-              
-            }
+          
 
         }
 
