@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\brodybrownlee\\Source\\Repos\\CSharpProj3V2\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj": {}
+    "C:\\Users\\Brody\\Desktop\\CSharp_Project_3\\CSharpProj3V1\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\brodybrownlee\\Source\\Repos\\CSharpProj3V2\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj": {
+    "C:\\Users\\Brody\\Desktop\\CSharp_Project_3\\CSharpProj3V1\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\brodybrownlee\\Source\\Repos\\CSharpProj3V2\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj",
+        "projectUniqueName": "C:\\Users\\Brody\\Desktop\\CSharp_Project_3\\CSharpProj3V1\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj",
         "projectName": "CSharp_Project_3",
-        "projectPath": "C:\\Users\\brodybrownlee\\Source\\Repos\\CSharpProj3V2\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj",
-        "packagesPath": "C:\\Users\\brodybrownlee\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\brodybrownlee\\Source\\Repos\\CSharpProj3V2\\CSharp_Project_3\\CSharp_Project_3\\obj\\",
+        "projectPath": "C:\\Users\\Brody\\Desktop\\CSharp_Project_3\\CSharpProj3V1\\CSharp_Project_3\\CSharp_Project_3\\CSharp_Project_3.csproj",
+        "packagesPath": "C:\\Users\\Brody\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Brody\\Desktop\\CSharp_Project_3\\CSharpProj3V1\\CSharp_Project_3\\CSharp_Project_3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\brodybrownlee\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Brody\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +26,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -38,7 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -57,7 +55,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.205\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

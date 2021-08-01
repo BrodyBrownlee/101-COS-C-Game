@@ -25,6 +25,9 @@ namespace CSharp_Project_3
         Rectangle[] LeftS = new Rectangle[20];
         Rectangle[] Object = new Rectangle[20];
         public class Enemy { };
+
+       
+
         int bulletloopl;
         int bulletloopr;
         int px = 350, py = 400;
@@ -34,16 +37,18 @@ namespace CSharp_Project_3
         int x4 = 500;
         int floory = 489;
         int enemyhp = 3;
-        bool left, right, up, jump, shoot;
+        bool left, right, up, jump, shoot, start;
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2, espeedu = 0, espeedd = 0;
         int gravity = -1;
         string lastkeypressed;
+        string difficulty;
+        int time;
+
         public Form1()
         {
             InitializeComponent();
-
-
+          
 
             //stops the objects from flickering
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
@@ -55,13 +60,125 @@ namespace CSharp_Project_3
         {
             bulletloopl = 1;
             bulletloopr = 1;
+            start = false;
 
+            tmrCountdown.Enabled = false;
+            tmrBulletdelay.Enabled = false;
+            TmrCollision.Enabled = false;
+            TmrPlayer.Enabled = false;
+            btnBurglar.Visible = false;
+            btnBurglar.Enabled = false;
+            btnCriminal.Enabled = false;
+            btnCriminal.Visible = false;
+            btnTheif.Visible = false;
+            btnTheif.Enabled = false;
+            difficulty = "theif";
+            time = 60;
+                
 
 
         }
 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            startGame();
+        }
+        private void btnDifficulty_Click(object sender, EventArgs e)
+        {
+            optionSelect();
+        }
+        private void btnTheif_Click(object sender, EventArgs e)
+        {
+            difficulty = "theif";
+            btnStart.Visible = true;
+            btnStart.Enabled = true;
+            btnDifficulty.Enabled = true;
+            btnDifficulty.Visible = true;
+            btnBurglar.Visible = false;
+            btnBurglar.Enabled = false;
+            btnCriminal.Enabled = false;
+            btnCriminal.Visible = false;
+            btnTheif.Visible = false;
+            btnTheif.Enabled = false;
+        }
 
+        private void btnBurglar_Click(object sender, EventArgs e)
+        {
+            difficulty = "burglar";
+            btnStart.Visible = true;
+            btnStart.Enabled = true;
+            btnDifficulty.Enabled = true;
+            btnDifficulty.Visible = true;
+            btnBurglar.Visible = false;
+            btnBurglar.Enabled = false;
+            btnCriminal.Enabled = false;
+            btnCriminal.Visible = false;
+            btnTheif.Visible = false;
+            btnTheif.Enabled = false;
+        }
 
+        private void btnCriminal_Click(object sender, EventArgs e)
+        {
+            difficulty = "criminal";
+            btnStart.Visible = true;
+            btnStart.Enabled = true;
+            btnDifficulty.Enabled = true;
+            btnDifficulty.Visible = true;
+            btnBurglar.Visible = false;
+            btnBurglar.Enabled = false;
+            btnCriminal.Enabled = false;
+            btnCriminal.Visible = false;
+            btnTheif.Visible = false;
+            btnTheif.Enabled = false;
+
+        }
+        private void optionSelect()
+        {
+            btnStart.Visible = false;
+            btnStart.Enabled = false;
+            btnDifficulty.Enabled = false;
+            btnDifficulty.Visible = false;
+            btnBurglar.Visible =  true;
+            btnBurglar.Enabled =  true;
+            btnCriminal.Enabled = true;
+            btnCriminal.Visible = true;
+            btnTheif.Visible =    true;
+            btnTheif.Enabled = true;
+        }
+        private void startGame()//start game function
+        {
+            start = true;
+            btnStart.Visible = false;
+            btnStart.Enabled = false;
+            tmrBulletdelay.Enabled = true;
+            TmrCollision.Enabled = true;
+            TmrPlayer.Enabled = true;
+            tmrCountdown.Enabled = true;
+            btnDifficulty.Enabled = false;
+            btnDifficulty.Visible = false;
+            btnBurglar.Visible = false;
+            btnBurglar.Enabled = false;
+            btnCriminal.Enabled = false;
+            btnCriminal.Visible = false;
+            btnTheif.Visible = false;
+            btnTheif.Enabled = false;
+            if (difficulty == "theif")
+            {
+                time = 60;
+            }
+            if (difficulty == "burglar")
+            {
+                time = 45;
+            }
+            if (difficulty == "criminal")
+            {
+                time = 30;
+            }
+        }
+        private void gameOver()
+        {
+
+        }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Up) { up = true; }
@@ -76,6 +193,15 @@ namespace CSharp_Project_3
             if (e.KeyData == Keys.Left) { left = false; }
             if (e.KeyData == Keys.Right) { right = false; }
             if (e.KeyData == Keys.Space) { shoot = false; }
+        }
+        private void tmrCountdown_Tick(object sender, EventArgs e)
+        {
+            label1.Text = time + "";
+            time -= 1;
+            if (time <= 0)
+            {
+                gameOver();
+            }
         }
         private void tmrBulletdelay_Tick(object sender, EventArgs e)
         {
@@ -216,6 +342,7 @@ namespace CSharp_Project_3
             }
             if (py <= 22)
             {
+              /*  py += 14;*/
                 y += 14;
                 y2 += 14;
                 floory += 14;
@@ -231,43 +358,75 @@ namespace CSharp_Project_3
             {
 
             }
-          
-     
-            if (py >= 381 && y == 320)
+
+            if (x > -1000)
             {
-                py = 381;
-                y += 0;
-                y2 += 0;
-                floory += 0;
-            }
-            if (py >= 367 && y == 306)
-            {
-                y = 320;
-                y2 = 120;
-                floory = 489;
-            }
+                if (py >= 381 && y == 320)
+                {
+                    py = 381;
+                    y += 0;
+                    y2 += 0;
+                    floory += 0;
+                }
+                if (py >= 367 && y == 306)
+                {
+                    y = 320;
+                    y2 = 120;
+                    floory = 489;
+                }
 
 
-            if (y >= 558)
+                if (y >= 558)
                 {
                     y = 558;
                 }
                 if (y >= 516)
                 {
+
                     y -= 14;
                     y2 -= 14;
                     floory -= 14;
                 }
                 if (py >= 382)
                 {
-
+                    py -= 14;
                     y -= 14;
                     y2 -= 14;
                     floory -= 14;
 
                 }
-                if (x > -1000)
-                if (y == 0)
+            }
+
+            if (x < -1000)
+            {
+                if (y >= 716)
+                {
+                    y -= 14;
+                    y2 -= 14;
+                    floory -= 14;
+                }
+                if (py >= 381 && y == 320)
+                {
+                    py = 381;
+                    y += 0;
+                    y2 += 0;
+                    floory += 0;
+                }
+                if (py >= 367 && y == 306)
+                {
+                    y = 320;
+                    y2 = 120;
+                    floory = 489;
+                }
+                if (py >= 382)
+                {
+                  /*  py -= 14;*/
+                    y -= 14;
+                    y2 -= 14;
+                    floory -= 14;
+                }
+            }
+            if (y == 0)
                 {
 
                 }
@@ -304,7 +463,7 @@ namespace CSharp_Project_3
             Ladder4 = new Rectangle(x3 + 410, y2 - 70, 50, 190);
             Ladder5 = new Rectangle(x3 + 690, y2 - 270, 50, 210);
 
-            label1.Text = py + "(py)";
+     
             label2.Text = y + "(y)";
             //automatically setting up collision for my objects.
             //first building objects
@@ -390,7 +549,7 @@ namespace CSharp_Project_3
                         gravity = 5;
                     }
                 }
-                gravity += 1;
+       
             }
 /*
             if (py + 50 > PnlGame.Height)
@@ -423,48 +582,49 @@ namespace CSharp_Project_3
         }
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
-            g = e.Graphics;
-
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder3);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder4);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder5);
-            g.DrawImage(character, areaCharacter);
-            g.DrawImage(tree, areaTree);
-            g.DrawImage(tree2, areaTree2);
-            g.DrawImage(character, enemy);
-
-            for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
+            if (start == true)// when the game starts all of the graphics are loaded
             {
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
+                g = e.Graphics;
 
-            }
+                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
+                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
+                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder3);
+                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder4);
+                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder5);
+                g.DrawImage(character, areaCharacter);
+                g.DrawImage(tree, areaTree);
+                g.DrawImage(tree2, areaTree2);
+                g.DrawImage(character, enemy);
 
-            for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
-            {
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
-                e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
-                e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
-                e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
-                e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
-            }
+                for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
 
+                }
 
-
+                for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
+                }
+                for (int O = 1; O < 16; O++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
+                }
+                for (int O = 1; O < 16; O++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
+                }
+                for (int O = 1; O < 16; O++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
+                }
+                for (int O = 1; O < 16; O++)
+                {
+                    e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
+                }
             
+        }
+
         }
 
 
