@@ -16,7 +16,8 @@ namespace CSharp_Project_3
         Image character = Image.FromFile(Application.StartupPath + @"\character2.jpg");
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
-        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2,Ladder3,Ladder4,Ladder5, gameoverRectangle;
+        Image key = Image.FromFile(Application.StartupPath + @"\key.png");
+        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2, Ladder3, Ladder4, Ladder5, gameoverRectangle, keyrectangle;
         Rectangle[] bulletarrayl = new Rectangle[16];
         Rectangle[] bulletarrayr = new Rectangle[16];
         Rectangle[] UpS = new Rectangle[20];
@@ -26,7 +27,7 @@ namespace CSharp_Project_3
         Rectangle[] Object = new Rectangle[20];
         public class Enemy { };
 
-       
+
 
         int bulletloopl;
         int bulletloopr;
@@ -37,7 +38,7 @@ namespace CSharp_Project_3
         int x4 = 500;
         int floory = 489;
         int enemyhp = 3;
-        bool left, right, up, jump, shoot, start, game_end;
+        bool left, right, up, jump, shoot, start, game_end, havekey;
         int lives;
         int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2, espeedu = 0, espeedd = 0;
         int gravity = -1;
@@ -48,7 +49,7 @@ namespace CSharp_Project_3
         public Form1()
         {
             InitializeComponent();
-          
+
 
             //stops the objects from flickering
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic, null, PnlGame, new object[] { true });
@@ -139,11 +140,11 @@ namespace CSharp_Project_3
             btnStart.Enabled = false;
             btnDifficulty.Enabled = false;
             btnDifficulty.Visible = false;
-            btnBurglar.Visible =  true;
-            btnBurglar.Enabled =  true;
+            btnBurglar.Visible = true;
+            btnBurglar.Enabled = true;
             btnCriminal.Enabled = true;
             btnCriminal.Visible = true;
-            btnTheif.Visible =    true;
+            btnTheif.Visible = true;
             btnTheif.Enabled = true;
         }
         private void startGame()//start game function
@@ -173,26 +174,66 @@ namespace CSharp_Project_3
             }
             if (difficulty == "criminal")
             {
-                time = 30;
+                time = 1;
             }
-          
+
         }
         private void gameOver()
         {
             game_end = true;
+            gameoverRectangle = new Rectangle(0, 0, 1000, 1000);
         }
         private void tmrCountdown_Tick(object sender, EventArgs e)
         {
+
+
             label1.Text = time + "";
             time -= 1;
-            if (time == 0)
+            if (time <= 0)
             {
-               
                 gameOver();
-                TmrPlayer.Enabled = false;
-                tmrBulletdelay.Enabled = false;
-                TmrCollision.Enabled = false;
+                if (game_end == true)
+                {
+                    Ladder = Rectangle.Empty;
+                    Ladder2 = Rectangle.Empty;
+                    Ladder3 = Rectangle.Empty;
+                    Ladder4 = Rectangle.Empty;
+                    Ladder5 = Rectangle.Empty;
+                    areaCharacter = Rectangle.Empty;
+                    keyrectangle = Rectangle.Empty;
+                    for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
+                    {
+                        bulletarrayl[bulletloopl] = Rectangle.Empty;
+                    }
+                    for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
+                    {
 
+                        bulletarrayr[bulletloopr] = Rectangle.Empty;
+                    }
+                    for (int O = 1; O < 16; O++)
+                    {
+                        UpS[O] = Rectangle.Empty;
+                    }
+                    for (int O = 1; O < 16; O++)
+                    {
+                        LeftS[O] = Rectangle.Empty;
+                    }
+                    for (int O = 1; O < 16; O++)
+                    {
+                        RightS[O] = Rectangle.Empty;
+                    }
+                    for (int O = 1; O < 16; O++)
+                    {
+                        DownS[O] = Rectangle.Empty;
+                    }
+                    label1.Text = "0";
+                    tmrCountdown.Enabled = false;
+                    start = false;
+
+                    TmrPlayer.Enabled = false;
+                    tmrBulletdelay.Enabled = false;
+                    TmrCollision.Enabled = false;
+                }
             }
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -210,7 +251,7 @@ namespace CSharp_Project_3
             if (e.KeyData == Keys.Right) { right = false; }
             if (e.KeyData == Keys.Space) { shoot = false; }
         }
- 
+
         private void tmrBulletdelay_Tick(object sender, EventArgs e)
         {
 
@@ -350,7 +391,7 @@ namespace CSharp_Project_3
             }
             if (py <= 22)
             {
-              /*  py += 14;*/
+                /*  py += 14;*/
                 y += 14;
                 y2 += 14;
                 floory += 14;
@@ -428,17 +469,17 @@ namespace CSharp_Project_3
                 }
                 if (py >= 382)
                 {
-                  /*  py -= 14;*/
+                    /*  py -= 14;*/
                     y -= 14;
                     y2 -= 14;
                     floory -= 14;
                 }
             }
             if (y == 0)
-                {
+            {
 
-                }
-            
+            }
+
             if (y == 334 && py == 395)// fixes a bug where the floor would move if you hit your head on the roof, which often lead to clipping thorugh the floor.
             {
                 y -= 14;
@@ -451,29 +492,29 @@ namespace CSharp_Project_3
                 y2 += 0;
                 floory += 0;
             }
-         
+
         }
-       
-    
+
+
 
         private void TmrPlayer_Tick(object sender, EventArgs e)
         {
             //declaring player and enemy rectangles
-            gameoverRectangle = new Rectangle(0, 0, 1000, 1000);
+
             enemy = new Rectangle(x4, floory - 110, 50, 50);
             areaCharacter = new Rectangle(px, py, 50, 50);
             LSide = new Rectangle(px, py, 5, 50);//Player Rectangle
             TSide = new Rectangle(px + 5, py, 50, 5);//Player Rectangle
             BSide = new Rectangle(px + 5, py + 45, 50, 5);//Player Rectangle
             RSide = new Rectangle(px + 45, py, 5, 50);//Player Rectangle
-            Ladder = new Rectangle(x2 + 690, y2 + 130, 50, 180 );// Ladder Test
+            Ladder = new Rectangle(x2 + 690, y2 + 130, 50, 180);// Ladder Test
             Ladder2 = new Rectangle(x2 + 60, y2 - 50, 50, 180);
             Ladder3 = new Rectangle(x3 + 690, y2 + 120, 50, 190);
             Ladder4 = new Rectangle(x3 + 410, y2 - 70, 50, 190);
             Ladder5 = new Rectangle(x3 + 690, y2 - 270, 50, 210);
+            keyrectangle = new Rectangle(x2 + 750, y2 - 100, 50, 50);
 
-     
-            label2.Text = y + "(y)";
+            label2.Text = havekey + "";
             //automatically setting up collision for my objects.
             //first building objects
             Object[1] = new Rectangle(x2, y2 - 50, 50, 300);
@@ -482,7 +523,7 @@ namespace CSharp_Project_3
             Object[4] = new Rectangle(x2 + 375, y2 + 150, 50, 100);
             Object[5] = new Rectangle(x2 + 120, y2 - 50, 630, 50);
             Object[6] = new Rectangle(x2 + 375, y2 - 30, 50, 100);
-            Object[7] = new Rectangle(0, floory - 60, 5000, 50) ;
+            Object[7] = new Rectangle(0, floory - 60, 5000, 50);
             //second building objects
             Object[8] = new Rectangle(x3, y2 - 290, 50, 540);
             Object[9] = new Rectangle(x3 + 50, y2 + 120, 630, 50);
@@ -490,7 +531,7 @@ namespace CSharp_Project_3
             Object[11] = new Rectangle(x3 + 470, y2 - 70, 330, 50);
             Object[12] = new Rectangle(x3 + 350, y2 + 150, 50, 100);
             Object[13] = new Rectangle(x3 + 350, y2 - 100, 50, 150);
-            Object[14] = new Rectangle(x3, y2 -270 , 680, 50);
+            Object[14] = new Rectangle(x3, y2 - 270, 680, 50);
 
             for (int O = 1; O < 16; O++)
             {
@@ -533,11 +574,11 @@ namespace CSharp_Project_3
                 x4 -= espeedr;
             }
 
-         
+
             //gravity and the interaction with the tops and bottoms of my platforms
             for (int O = 1; O < 16; O++)
             {
-                if(BSide.IntersectsWith(UpS[O]))
+                if (BSide.IntersectsWith(UpS[O]))
                 {
                     gravity = 0;
                     py = Object[O].Top - 49;
@@ -558,15 +599,9 @@ namespace CSharp_Project_3
                         gravity = 5;
                     }
                 }
-       
+
             }
-/*
-            if (py + 50 > PnlGame.Height)
-            {
-                gravity = 0;
-                py = PnlGame.Height - 50;
-                jump = true;
-            }*/
+
             if (up == true & jump == true)
             {
                 gravity = 15;
@@ -576,13 +611,21 @@ namespace CSharp_Project_3
             {
                 gravity = gravity - 1;
             }
-         
-         
-        
-       
+
+
+
+
             py = py - gravity;
             //end of gravity
-
+            if (areaCharacter.IntersectsWith(keyrectangle))
+            {
+                keyrectangle = Rectangle.Empty;
+                havekey = true;
+            }
+            if (havekey == true)
+            {
+                keyrectangle = Rectangle.Empty;
+            }
             PnlGame.Invalidate();
         }
         private void label1_Click(object sender, EventArgs e)
@@ -592,59 +635,60 @@ namespace CSharp_Project_3
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-            if (game_end == true)
+
+
+            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
+            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
+            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder3);
+            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder4);
+            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder5);
+            g.DrawImage(character, areaCharacter);
+            g.DrawImage(tree, areaTree);
+            g.DrawImage(tree2, areaTree2);
+            g.DrawImage(character, enemy);
+            g.DrawImage(key, keyrectangle);
+
+            for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
-                e.Graphics.FillRectangle(Brushes.White, gameoverRectangle);
-            }
-        
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
 
-            if (start == true)// when the game starts all of the graphics are loaded
+            }
+
+            for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
             {
-              
-
-                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
-                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
-                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder3);
-                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder4);
-                e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder5);
-                g.DrawImage(character, areaCharacter);
-                g.DrawImage(tree, areaTree);
-                g.DrawImage(tree2, areaTree2);
-                g.DrawImage(character, enemy);
-
-                for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
-
-                }
-
-                for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
-                }
-                for (int O = 1; O < 16; O++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
-                }
-                for (int O = 1; O < 16; O++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
-                }
-                for (int O = 1; O < 16; O++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
-                }
-                for (int O = 1; O < 16; O++)
-                {
-                    e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
-                }
-                start = false;
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
             }
-          
+            for (int O = 1; O < 16; O++)
+            {
+                e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
+            }
+            for (int O = 1; O < 16; O++)
+            {
+                e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
+            }
+            for (int O = 1; O < 16; O++)
+            {
+                e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
+            }
+            for (int O = 1; O < 16; O++)
+            {
+                e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
+            }
 
         }
 
 
+
+
+
+
+
+
+
+
+
     }
 
+
 }
+
