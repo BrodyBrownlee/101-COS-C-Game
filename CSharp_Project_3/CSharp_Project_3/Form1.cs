@@ -17,7 +17,7 @@ namespace CSharp_Project_3
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image key = Image.FromFile(Application.StartupPath + @"\key.png");
-        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2, Ladder3, Ladder4, Ladder5, gameoverRectangle, keyrectangle;
+        Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2, Ladder3, Ladder4, Ladder5, gameoverRectangle, keyrectangle, lockeddoor, doorL;
         Rectangle[] bulletarrayl = new Rectangle[16];
         Rectangle[] bulletarrayr = new Rectangle[16];
         Rectangle[] UpS = new Rectangle[20];
@@ -174,7 +174,7 @@ namespace CSharp_Project_3
             }
             if (difficulty == "criminal")
             {
-                time = 1;
+                time = 30;
             }
 
         }
@@ -192,48 +192,39 @@ namespace CSharp_Project_3
             if (time <= 0)
             {
                 gameOver();
-                if (game_end == true)
+
+                enemy = Rectangle.Empty;
+                Ladder = Rectangle.Empty;
+                Ladder2 = Rectangle.Empty;
+                Ladder3 = Rectangle.Empty;
+                Ladder4 = Rectangle.Empty;
+                Ladder5 = Rectangle.Empty;
+                areaCharacter = Rectangle.Empty;
+                keyrectangle = Rectangle.Empty;
+                for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
                 {
-                    Ladder = Rectangle.Empty;
-                    Ladder2 = Rectangle.Empty;
-                    Ladder3 = Rectangle.Empty;
-                    Ladder4 = Rectangle.Empty;
-                    Ladder5 = Rectangle.Empty;
-                    areaCharacter = Rectangle.Empty;
-                    keyrectangle = Rectangle.Empty;
-                    for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
-                    {
-                        bulletarrayl[bulletloopl] = Rectangle.Empty;
-                    }
-                    for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
-                    {
-
-                        bulletarrayr[bulletloopr] = Rectangle.Empty;
-                    }
-                    for (int O = 1; O < 16; O++)
-                    {
-                        UpS[O] = Rectangle.Empty;
-                    }
-                    for (int O = 1; O < 16; O++)
-                    {
-                        LeftS[O] = Rectangle.Empty;
-                    }
-                    for (int O = 1; O < 16; O++)
-                    {
-                        RightS[O] = Rectangle.Empty;
-                    }
-                    for (int O = 1; O < 16; O++)
-                    {
-                        DownS[O] = Rectangle.Empty;
-                    }
-                    label1.Text = "0";
-                    tmrCountdown.Enabled = false;
-                    start = false;
-
-                    TmrPlayer.Enabled = false;
-                    tmrBulletdelay.Enabled = false;
-                    TmrCollision.Enabled = false;
+                    bulletarrayl[bulletloopl] = Rectangle.Empty;
                 }
+                for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
+                {
+
+                    bulletarrayr[bulletloopr] = Rectangle.Empty;
+                }
+                for (int O = 1; O < 16; O++)
+                {
+                    UpS[O] = Rectangle.Empty;
+                    LeftS[O] = Rectangle.Empty;
+                    RightS[O] = Rectangle.Empty;
+                    DownS[O] = Rectangle.Empty;
+                }
+                PnlGame.Invalidate();
+                tmrCountdown.Enabled = false;
+                start = false;
+
+                TmrPlayer.Enabled = false;
+                tmrBulletdelay.Enabled = false;
+                TmrCollision.Enabled = false;
+
             }
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -513,6 +504,8 @@ namespace CSharp_Project_3
             Ladder4 = new Rectangle(x3 + 410, y2 - 70, 50, 190);
             Ladder5 = new Rectangle(x3 + 690, y2 - 270, 50, 210);
             keyrectangle = new Rectangle(x2 + 750, y2 - 100, 50, 50);
+            lockeddoor = new Rectangle(x3 +1, y2 + 250, 50, 50);
+            doorL = new Rectangle(x3 +1, y2 + 250, 5, 50);
 
             label2.Text = havekey + "";
             //automatically setting up collision for my objects.
@@ -532,7 +525,7 @@ namespace CSharp_Project_3
             Object[12] = new Rectangle(x3 + 350, y2 + 150, 50, 100);
             Object[13] = new Rectangle(x3 + 350, y2 - 100, 50, 150);
             Object[14] = new Rectangle(x3, y2 - 270, 680, 50);
-
+         
             for (int O = 1; O < 16; O++)
             {
                 UpS[O] = new Rectangle(Object[O].Left, Object[O].Top, Object[O].Width, 20);
@@ -540,7 +533,7 @@ namespace CSharp_Project_3
                 LeftS[O] = new Rectangle(Object[O].Left, Object[O].Top + 5, 5, Object[O].Height - 5);
                 DownS[O] = new Rectangle(Object[O].Left, Object[O].Bottom - 20, Object[O].Width, 25);
 
-                if (right == true && RSide.IntersectsWith(LeftS[O]))
+                if (right == true && RSide.IntersectsWith(LeftS[O]) || right == true && RSide.IntersectsWith(doorL) && havekey == false)
                 {
                     espeedr = 0;
                     pspeedr = 0;
@@ -551,6 +544,7 @@ namespace CSharp_Project_3
                     espeedl = 0;
                     pspeedl = 0;
                 }
+
             }
 
             //collsion ends
@@ -599,9 +593,19 @@ namespace CSharp_Project_3
                         gravity = 5;
                     }
                 }
-
             }
-
+          
+            if (areaCharacter.IntersectsWith(lockeddoor))
+            {
+                if (havekey == true)
+                {
+                    lockeddoor = Rectangle.Empty;
+                    doorL = Rectangle.Empty;
+                    PnlGame.Invalidate();
+                }                                                           
+            }
+            
+          
             if (up == true & jump == true)
             {
                 gravity = 15;
@@ -647,6 +651,10 @@ namespace CSharp_Project_3
             g.DrawImage(tree2, areaTree2);
             g.DrawImage(character, enemy);
             g.DrawImage(key, keyrectangle);
+            e.Graphics.FillRectangle(Brushes.Red, lockeddoor);
+            e.Graphics.FillRectangle(Brushes.Red, lockeddoor);
+            
+
 
             for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
@@ -661,34 +669,14 @@ namespace CSharp_Project_3
             for (int O = 1; O < 16; O++)
             {
                 e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
                 e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
                 e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
-            }
-            for (int O = 1; O < 16; O++)
-            {
                 e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
+
+                e.Graphics.FillRectangle(Brushes.Red, Object[15]);
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 }
 
