@@ -17,6 +17,8 @@ namespace CSharp_Project_3
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image key = Image.FromFile(Application.StartupPath + @"\key.png");
+        Image wall = Image.FromFile(Application.StartupPath + @"\brick_wall.jpg");
+        Image ladder = Image.FromFile(Application.StartupPath + @"\ladder1.png");
         Rectangle areaTree, areaCharacter, areaT1, areaB1, areaL1, areaR1, areaT2, areaB2, areaL2, areaR2, areaTree2, LSide, RSide, TSide, BSide, areaT3, areaB3, areaR3, areaL3, bullet, enemy, Ladder, Ladder2, Ladder3, Ladder4, Ladder5, gameoverRectangle, keyrectangle, lockeddoor, doorL, helicopter;
         Rectangle[] bulletarrayl = new Rectangle[16];
         Rectangle[] bulletarrayr = new Rectangle[16];
@@ -179,9 +181,17 @@ namespace CSharp_Project_3
             {
                 time = 30;
             }
+               px = 350;
+               py = 400;
+               x = 120; 
+               y = 320;
+               x2 = 450; 
+               y2 = 120;
+               x3 = 1650;
+               x4 = 500;
+               floory = 489;
 
-          
-  
+
         }
         private void gameOver()
         {
@@ -199,6 +209,7 @@ namespace CSharp_Project_3
             keyrectangle = Rectangle.Empty;
             doorL = Rectangle.Empty;
             lockeddoor = Rectangle.Empty;
+            helicopter = Rectangle.Empty;
             for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
             {
                 bulletarrayl[bulletloopl] = Rectangle.Empty;
@@ -210,10 +221,7 @@ namespace CSharp_Project_3
             }
             for (int O = 1; O < 16; O++)
             {
-                UpS[O] = Rectangle.Empty;
-                LeftS[O] = Rectangle.Empty;
-                RightS[O] = Rectangle.Empty;
-                DownS[O] = Rectangle.Empty;
+                Object[O] = Rectangle.Empty;
             }
             PnlGame.Invalidate();
             tmrCountdown.Enabled = false;
@@ -231,6 +239,7 @@ namespace CSharp_Project_3
             btnDifficulty.Visible = true;
             BtnBack.Visible = false;
             BtnBack.Enabled = false;
+            label3.Visible = false;
         }
         private void win()
         {
@@ -527,7 +536,7 @@ namespace CSharp_Project_3
             keyrectangle = new Rectangle(x2 + 750, y2 - 100, 50, 50);//key
             lockeddoor = new Rectangle(x3, y2 + 250, 50, 70);//door
             doorL = new Rectangle(x3, y2 + 250, 5, 70);//door's collision box
-            helicopter = new Rectangle(x3, y2 + 150,100,50);//finish line;
+            helicopter = new Rectangle(x3, y2 - 300,100,50);//finish line;
 
             label2.Text = havekey + "";
           
@@ -666,11 +675,11 @@ namespace CSharp_Project_3
             g = e.Graphics;
 
 
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder2);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder3);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder4);
-            e.Graphics.FillRectangle(Brushes.SaddleBrown, Ladder5);
+            g.DrawImage(ladder, Ladder);
+            g.DrawImage(ladder, Ladder2);
+            g.DrawImage(ladder, Ladder3);
+            g.DrawImage(ladder, Ladder4);
+            g.DrawImage(ladder, Ladder5);
             e.Graphics.FillRectangle(Brushes.Gray, helicopter);
             g.DrawImage(character, areaCharacter);
             g.DrawImage(tree, areaTree);
@@ -694,10 +703,11 @@ namespace CSharp_Project_3
             }
             for (int O = 1; O < 16; O++)
             {
-                e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
+                g.DrawImage(wall, Object[O]);
+             /*   e.Graphics.FillRectangle(Brushes.Green, UpS[O]);
                 e.Graphics.FillRectangle(Brushes.Green, LeftS[O]);
                 e.Graphics.FillRectangle(Brushes.Green, RightS[O]);
-                e.Graphics.FillRectangle(Brushes.Green, DownS[O]);
+                e.Graphics.FillRectangle(Brushes.Green, DownS[O]);*/
 
             
             }
