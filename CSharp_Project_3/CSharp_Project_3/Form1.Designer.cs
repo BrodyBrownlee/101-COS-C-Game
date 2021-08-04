@@ -32,6 +32,7 @@ namespace CSharp_Project_3
             this.components = new System.ComponentModel.Container();
             this.TmrPlayer = new System.Windows.Forms.Timer(this.components);
             this.PnlGame = new System.Windows.Forms.Panel();
+            this.BtnBack = new System.Windows.Forms.Button();
             this.btnCriminal = new System.Windows.Forms.Button();
             this.btnBurglar = new System.Windows.Forms.Button();
             this.btnTheif = new System.Windows.Forms.Button();
@@ -42,6 +43,7 @@ namespace CSharp_Project_3
             this.TmrCollision = new System.Windows.Forms.Timer(this.components);
             this.tmrBulletdelay = new System.Windows.Forms.Timer(this.components);
             this.tmrCountdown = new System.Windows.Forms.Timer(this.components);
+            this.label3 = new System.Windows.Forms.Label();
             this.PnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +55,8 @@ namespace CSharp_Project_3
             // 
             // PnlGame
             // 
+            this.PnlGame.Controls.Add(this.label3);
+            this.PnlGame.Controls.Add(this.BtnBack);
             this.PnlGame.Controls.Add(this.btnCriminal);
             this.PnlGame.Controls.Add(this.btnBurglar);
             this.PnlGame.Controls.Add(this.btnTheif);
@@ -65,6 +69,18 @@ namespace CSharp_Project_3
             this.PnlGame.Size = new System.Drawing.Size(804, 454);
             this.PnlGame.TabIndex = 0;
             this.PnlGame.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlGame_Paint);
+            // 
+            // BtnBack
+            // 
+            this.BtnBack.Enabled = false;
+            this.BtnBack.Location = new System.Drawing.Point(330, 308);
+            this.BtnBack.Name = "BtnBack";
+            this.BtnBack.Size = new System.Drawing.Size(140, 50);
+            this.BtnBack.TabIndex = 6;
+            this.BtnBack.Text = "Back to Menu";
+            this.BtnBack.UseVisualStyleBackColor = true;
+            this.BtnBack.Visible = false;
+            this.BtnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // btnCriminal
             // 
@@ -151,6 +167,17 @@ namespace CSharp_Project_3
             this.tmrCountdown.Interval = 1000;
             this.tmrCountdown.Tick += new System.EventHandler(this.tmrCountdown_Tick);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(258, 97);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(288, 86);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "You Win!";
+            this.label3.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -183,6 +210,8 @@ namespace CSharp_Project_3
         private System.Windows.Forms.Button btnBurglar;
         private System.Windows.Forms.Button btnTheif;
         private System.Windows.Forms.Timer tmrCountdown;
+        private System.Windows.Forms.Button BtnBack;
+        private System.Windows.Forms.Label label3;
     }
 }
 
