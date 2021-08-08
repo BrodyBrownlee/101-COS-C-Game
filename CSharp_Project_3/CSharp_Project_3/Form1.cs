@@ -13,12 +13,14 @@ namespace CSharp_Project_3
     public partial class Form1 : Form
     {
         Graphics g;
-        Image character = Image.FromFile(Application.StartupPath + @"\character2.jpg");
+        Image characterright = Image.FromFile(Application.StartupPath + @"\PlayerRight.png");
+        Image characterleft = Image.FromFile(Application.StartupPath + @"\Playerleft.png");
         Image tree = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image tree2 = Image.FromFile(Application.StartupPath + @"\tree.jpg");
         Image key = Image.FromFile(Application.StartupPath + @"\key.png");
         Image wall = Image.FromFile(Application.StartupPath + @"\brick_wall.jpg");
-        Image ladder = Image.FromFile(Application.StartupPath + @"\ladder1.png");
+        Image ladder = Image.FromFile(Application.StartupPath + @"\Ladder.png");
+        Image enemy = Image.FromFile(Application.StartupPath + @"\Enemy.png");
         Rectangle areaCharacter,areaT1,LSide, RSide, TSide, BSide, keyrectangle, lockeddoor, doorL, helicopter;
         Rectangle[] bulletarrayl = new Rectangle[16];
         Rectangle[] bulletarrayr = new Rectangle[16];
@@ -35,14 +37,74 @@ namespace CSharp_Project_3
         int x = 120, y = 320;
         int x2 = 450, y2 = 120;
         int x3 = 1650;
-        int x4 = 500;
         int floory = 489;
-        int enemyhp = 3;
+        int ehp = 3, ehp2 = 3, ehp3 = 3, ehp4 = 3, ehp5 = 3, ehp6 = 3, ehp7 = 3;
         bool left, right, up, jump, shoot, start, game_end, havekey, door_opened;
-        int lives;
-        int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2, espeedu = 0, espeedd = 0;
+        int lives = 3;
+        int pspeedr = 1, pspeedl = 1, espeedl = 2, espeedr = 2;
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            showInstructions();
+        }
+
+        private void btnSavename_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text == "")
+            {
+
+            }
+            else
+            {
+                txtName.Enabled = false;
+                btnSavename.Visible = false;
+                btnStart.Enabled = true;
+                btnDifficulty.Enabled = true;
+            }
+          
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            string context = txtName.Text;
+            bool isletter = true;
+            //for loop checks for letters as characters are entered
+            for (int i = 0; i < context.Length; i++)
+            {
+                if (!char.IsLetter(context[i]))// if current character not a letter
+                {
+                    isletter = false;//make isletter false
+                    break; // exit the for loop
+                }
+
+            }
+
+            // if not a letter clear the textbox and focus on it
+            // to enter name again
+            if (isletter == false)
+            {
+                txtName.Clear();
+                txtName.Focus();
+            }
+            else
+            {
+                btnSavename.Enabled = true;
+            }
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TmrInvincibility_Tick(object sender, EventArgs e)
+        {
+            TmrInvincibility.Enabled = false;
+        }
+
         int gravity = -1;
-        string lastkeypressed;
+        string lastkeypressed = "right";
         string difficulty;
         int time;
 
@@ -74,10 +136,17 @@ namespace CSharp_Project_3
             btnCriminal.Visible = false;
             btnTheif.Visible = false;
             btnTheif.Enabled = false;
+            btnStart.Enabled = false;
+            btnDifficulty.Enabled = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            label6.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
             difficulty = "theif";
             time = 60;
 
-        
+          
 
         }
         private void BtnBack_Click(object sender, EventArgs e)
@@ -105,6 +174,9 @@ namespace CSharp_Project_3
             btnCriminal.Visible = false;
             btnTheif.Visible = false;
             btnTheif.Enabled = false;
+            label6.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
         }
 
         private void btnBurglar_Click(object sender, EventArgs e)
@@ -120,6 +192,9 @@ namespace CSharp_Project_3
             btnCriminal.Visible = false;
             btnTheif.Visible = false;
             btnTheif.Enabled = false;
+            label6.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
         }
 
         private void btnCriminal_Click(object sender, EventArgs e)
@@ -135,7 +210,9 @@ namespace CSharp_Project_3
             btnCriminal.Visible = false;
             btnTheif.Visible = false;
             btnTheif.Enabled = false;
-
+            label6.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
         }
         private void optionSelect()
         {
@@ -149,6 +226,9 @@ namespace CSharp_Project_3
             btnCriminal.Visible = true;
             btnTheif.Visible = true;
             btnTheif.Enabled = true;
+            label6.Visible = true;
+            label7.Visible = true;
+            label8.Visible = true;
         }
         private void startGame()//start game function
         {
@@ -167,9 +247,13 @@ namespace CSharp_Project_3
             btnCriminal.Visible = false;
             btnTheif.Visible = false;
             btnTheif.Enabled = false;
+            label5.Visible = false;
+            btnHelp.Enabled = false;
+            btnHelp.Visible = false;
+            lives = 3;
             if (difficulty == "theif")
             {
-                time = 60000000;
+                time = 60;
             }
             if (difficulty == "burglar")
             {
@@ -186,10 +270,19 @@ namespace CSharp_Project_3
                x2 = 450; 
                y2 = 120;
                x3 = 1650;
-               x4 = 500;
                floory = 489;
 
-
+            for (int O = 1; O < 16; O++)
+            {
+                Enemy[1] = new Rectangle(x2 + 610, y2 + 260, 50, 50);
+                Enemy[2] = new Rectangle(x2 + 130, y2 + 80, 50, 50);
+                Enemy[3] = new Rectangle(x2 + 610, y2 - 100, 50, 50);
+                Enemy[4] = new Rectangle(x3 + 400, y2 + 260, 50, 50);
+                Enemy[5] = new Rectangle(x3 + 200, y2 + 70, 50, 50);
+                Enemy[6] = new Rectangle(x3 + 150, y - 570, 100, 100);
+            }
+            ehp = 3; ehp2 = 3; ehp3 = 3; ehp4 = 3; ehp5 = 3; ehp6 = 3; ehp7 = 3;
+            havekey = false;
         }
         private void gameOver()
         {
@@ -214,14 +307,21 @@ namespace CSharp_Project_3
             {
                 Object[O] = Rectangle.Empty;
                 Ladder[O] = Rectangle.Empty;
+                Enemy[O] = Rectangle.Empty;
             }
             PnlGame.Invalidate();
             tmrCountdown.Enabled = false;
             start = false;
-
+            label2.Visible = false;
+            label3.Visible = false;
+            label3.Visible = false;
             TmrPlayer.Enabled = false;
             tmrBulletdelay.Enabled = false;
             TmrCollision.Enabled = false;
+        }
+        private void showInstructions()
+        {
+            label5.Visible = true;
         }
         private void backtomenu()
         {
@@ -315,6 +415,7 @@ namespace CSharp_Project_3
                     {
                         bulletarrayl[bulletloopl] = Rectangle.Empty;
                     }
+                   
                 }
 
             }
@@ -408,6 +509,10 @@ namespace CSharp_Project_3
                 y += 6;
                 y2 += 6;
                 floory += 6;
+                for (int O = 1; O < 16; O++)
+                {
+                    Enemy[O].Y += 6;
+                }
             }
 
             if (y >= 500)
@@ -435,6 +540,8 @@ namespace CSharp_Project_3
                     y = 320;
                     y2 = 120;
                     floory = 489;
+      
+             
                 }
 
 
@@ -448,6 +555,10 @@ namespace CSharp_Project_3
                     y -= 6;
                     y2 -= 6;
                     floory -= 6;
+                    for (int O = 1; O < 16; O++)
+                    {
+                        Enemy[O].Y -= 6;
+                    }
                 }
                 if (py >= 382)
                 {
@@ -455,7 +566,10 @@ namespace CSharp_Project_3
                     y -= 6;
                     y2 -= 6;
                     floory -= 6;
-
+                    for (int O = 1; O < 16; O++)
+                    {
+                        Enemy[O].Y -= 6;
+                    }
                 }
             }
 
@@ -466,6 +580,10 @@ namespace CSharp_Project_3
                     y -= 6;
                     y2 -= 6;
                     floory -= 6;
+                    for (int O = 1; O < 16; O++)
+                    {
+                        Enemy[O].Y -= 6;
+                    }
                 }
                 if (py >= 381 && y == 320)
                 {
@@ -473,12 +591,17 @@ namespace CSharp_Project_3
                     y += 0;
                     y2 += 0;
                     floory += 0;
+                    for (int O = 1; O < 16; O++)
+                    {
+                        Enemy[O].Y += 0;
+                    }
                 }
                 if (py >= 367 && y == 306)
                 {
                     y = 320;
                     y2 = 120;
                     floory = 489;
+                  
                 }
                 if (py >= 382)
                 {
@@ -486,6 +609,10 @@ namespace CSharp_Project_3
                     y -= 6;
                     y2 -= 6;
                     floory -= 6;
+                    for (int O = 1; O < 16; O++)
+                    {
+                        Enemy[O].Y -= 6;
+                    }
                 }
             }
             if (y == 0)
@@ -498,12 +625,23 @@ namespace CSharp_Project_3
                 y -= 6;
                 y2 -= 6;
                 floory -= 6;
+                for (int O = 1; O < 16; O++)
+                {
+                    Enemy[O].Y -= 6 ;
+                }
+                 
+            
+
             }
             else
             {
                 y += 0;
                 y2 += 0;
                 floory += 0;
+                for (int O = 1; O < 16; O++)
+                {
+                    Enemy[O].Y +=0;
+                }
             }
 
         }
@@ -524,10 +662,9 @@ namespace CSharp_Project_3
             keyrectangle = new Rectangle(x2 + 750, y2 - 100, 50, 50);//key
             lockeddoor = new Rectangle(x3, y2 + 250, 50, 60);//door
             doorL = new Rectangle(x3, y2 + 250, 5, 70);//door's collision box
-            helicopter = new Rectangle(x3, y2 - 300,100,50);//finish line;
+            helicopter = new Rectangle(x3 + 50, y2 - 320, 100,50);//finish line;
 
-            label2.Text = py + "(py)";
-            label1.Text = y + "(y)";
+            label2.Text = "Health: " + lives;
           
             //first building objects
             Object[1] = new Rectangle(x2, y2 - 50, 50, 300);
@@ -545,7 +682,7 @@ namespace CSharp_Project_3
             Object[12] = new Rectangle(x3 + 350, y2 + 150, 50, 100);
             Object[13] = new Rectangle(x3 + 350, y2 - 100, 50, 150);
             Object[14] = new Rectangle(x3, y2 - 270, 680, 50);
-            //automatically setting up collision for my objects.
+      
 
             Ladder[1] = new Rectangle(x2 + 690, y2 + 130, 50, 180);// Ladder 
             Ladder[2] = new Rectangle(x2 + 60, y2 - 50, 50, 180);
@@ -554,15 +691,9 @@ namespace CSharp_Project_3
             Ladder[5] = new Rectangle(x3 + 690, y2 - 270, 50, 210);
             //enemies
 
-            Enemy[1] = new Rectangle(0, 0, 0, 0);
-            Enemy[2] = new Rectangle(0, 0, 0, 0);
-            Enemy[3] = new Rectangle(0, 0, 0, 0);
-            Enemy[4] = new Rectangle(0, 0, 0, 0);
-            Enemy[5] = new Rectangle(0, 0, 0, 0);
-            Enemy[6] = new Rectangle(0, 0, 0, 0);
-            Enemy[7] = new Rectangle(0, 0, 0, 0);
+           
 
-
+            //automatically setting up collision for my objects.
             for (int O = 1; O < 16; O++)
             {
                 UpS[O] = new Rectangle(Object[O].Left, Object[O].Top, Object[O].Width, 20);
@@ -581,7 +712,54 @@ namespace CSharp_Project_3
                     espeedl = 0;
                     pspeedl = 0;
                 }
+                if (areaCharacter.IntersectsWith(Enemy[1]) && TmrInvincibility.Enabled == false && ehp > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                if (areaCharacter.IntersectsWith(Enemy[2]) && TmrInvincibility.Enabled == false && ehp2 > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                if (areaCharacter.IntersectsWith(Enemy[3]) && TmrInvincibility.Enabled == false && ehp3 > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                if (areaCharacter.IntersectsWith(Enemy[4]) && TmrInvincibility.Enabled == false && ehp4 > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                if (areaCharacter.IntersectsWith(Enemy[5]) && TmrInvincibility.Enabled == false && ehp5 > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                if (areaCharacter.IntersectsWith(Enemy[6]) && TmrInvincibility.Enabled == false && ehp7 > 0)
+                {
+                    TmrInvincibility.Enabled = true;
+                    lives -= 1;
+                }
+                //enemy logic
 
+                if (Enemy[O].X <= 700)// if an enemy has an x value of less than 
+                {
+                    if (py - 10 <= Enemy[O].Y && py + 50 >= Enemy[O].Y)// if an enemy is within 10 of the players y value
+                    {
+                        if (px <= Enemy[O].X)// if the enenmy is behind the player
+                        {
+                            Enemy[O].X -= 2;
+                        }
+                        if (px >= Enemy[O].X)// if the enenmy is in front of the player
+                        {
+                            Enemy[O].X += 2;
+                        }
+                    }
+                }
+                  
+            
             }
 
             //collsion ends
@@ -593,8 +771,12 @@ namespace CSharp_Project_3
                 x += espeedl;
                 x2 += espeedl;
                 x3 += espeedl;
-                x4 += espeedl;
-
+                Enemy[1].X += espeedl;
+                Enemy[2].X += espeedl;
+                Enemy[3].X += espeedl;
+                Enemy[4].X += espeedl;
+                Enemy[5].X += espeedl;
+                Enemy[6].X += espeedl;
             }
             if (right) // if right arrow pressed
             {
@@ -602,7 +784,12 @@ namespace CSharp_Project_3
                 x -= espeedr;
                 x2 -= espeedr;
                 x3 -= espeedr;
-                x4 -= espeedr;
+                Enemy[1].X -= espeedr;
+                Enemy[2].X -= espeedr;
+                Enemy[3].X -= espeedr;
+                Enemy[4].X -= espeedr;
+                Enemy[5].X -= espeedr;
+                Enemy[6].X -= espeedr;
             }
 
 
@@ -630,10 +817,101 @@ namespace CSharp_Project_3
                         }
                     }
                 }
+                //enemy hp being taken away when a bullet is shot
+                if (bulletarrayl[O].IntersectsWith(Enemy[1]))
+                {
+                    ehp -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayl[O].IntersectsWith(Enemy[2]))
+                {
+                    ehp2 -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayl[O].IntersectsWith(Enemy[3]))
+                {
+                    ehp3 -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayl[O].IntersectsWith(Enemy[4]))
+                {
+                    ehp4 -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayl[O].IntersectsWith(Enemy[5]))
+                {
+                    ehp5 -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayl[O].IntersectsWith(Enemy[6]))
+                {
+                    ehp7 -= 1;
+                    bulletarrayl[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[1]))
+                {
+                    ehp -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[2]))
+                {
+                    ehp2 -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[3]))
+                {
+                    ehp3 -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[4]))
+                {
+                    ehp4 -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[5]))
+                {
+                    ehp5 -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
+                if (bulletarrayr[O].IntersectsWith(Enemy[6]))
+                {
+                    ehp7 -= 1;
+                    bulletarrayr[O] = Rectangle.Empty;
+                }
             }
-            
-       
-          
+
+            //deleting the enemies once their hp hits 0
+            if (ehp <= 0)
+            {
+                Enemy[1] = Rectangle.Empty;
+                Enemy[1].Y = -2000;// moving them down to stop collision
+            }
+            if (ehp2 <= 0)
+            {
+                Enemy[2] = Rectangle.Empty;
+                Enemy[2].Y = -2000;
+            }
+            if (ehp3 <= 0)
+            {
+                Enemy[3] = Rectangle.Empty;
+                Enemy[3].Y = -2000;
+            }
+            if (ehp4 <= 0)
+            {
+                Enemy[4] = Rectangle.Empty;
+                Enemy[4].Y = -2000;
+            }
+            if (ehp5 <= 0)
+            {
+                Enemy[5] = Rectangle.Empty;
+                Enemy[5].Y = -2000;
+            }
+            if (ehp7 <= 0)
+            {
+                Enemy[6] = Rectangle.Empty;
+                Enemy[6].Y = -2000;
+            }
+
             if (areaCharacter.IntersectsWith(lockeddoor) && havekey == true)
             {
                 door_opened = true;           
@@ -647,7 +925,7 @@ namespace CSharp_Project_3
             {
                 win();
             }
-
+            //gravity
             if (up == true & jump == true)
             {
                 gravity = 15;
@@ -660,7 +938,10 @@ namespace CSharp_Project_3
 
 
 
-
+            if (lives == 0 )
+            {
+                gameOver();
+            }
             py = py - gravity;
             //end of gravity
             if (areaCharacter.IntersectsWith(keyrectangle))
@@ -672,6 +953,8 @@ namespace CSharp_Project_3
             {
                 keyrectangle = Rectangle.Empty;
             }
+
+
             PnlGame.Invalidate();
         }
         private void label1_Click(object sender, EventArgs e)
@@ -680,36 +963,38 @@ namespace CSharp_Project_3
         private void PnlGame_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
-
+       
             for (int O = 1; O < 16; O++)
             {
                 g.DrawImage(wall, Object[O]);
 
                 g.DrawImage(ladder, Ladder[O]);
 
-                g.DrawImage(character, Enemy[O]);
+                g.DrawImage(enemy, Enemy[O]);
 
             }
             e.Graphics.FillRectangle(Brushes.Gray, helicopter);
-            g.DrawImage(character, areaCharacter);
             g.DrawImage(key, keyrectangle);
             e.Graphics.FillRectangle(Brushes.Red, lockeddoor);
             e.Graphics.FillRectangle(Brushes.Red, lockeddoor);
-            
 
+          
 
-            for (int bulletloopl = 0; bulletloopl <= 15; bulletloopl++)
+            for (int O = 0; O <= 15; O++)
             {
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[bulletloopl]);
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayl[O]);
+                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[O]);
 
             }
 
-            for (int bulletloopr = 0; bulletloopr <= 15; bulletloopr++)
+            if (lastkeypressed == "right")
             {
-                e.Graphics.FillRectangle(Brushes.Black, bulletarrayr[bulletloopr]);
+                g.DrawImage(characterright, areaCharacter);
             }
-      
-
+            if (lastkeypressed == "left")
+            {
+                g.DrawImage(characterleft, areaCharacter);
+            }
         }
     }
 }
